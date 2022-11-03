@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: always
+    container_name: app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/app
+  
+  mariadb:
+    image: mariadb:latest
+    container_name: app_db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root12345password
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
